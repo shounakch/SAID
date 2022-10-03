@@ -16,5 +16,5 @@ Next, install the package:
 
 ```
 library(devtools)
-install_github("shounakchattopadhyay/SynInt")
+install_github("shounakchattopadhyay/SAID")
 ```
