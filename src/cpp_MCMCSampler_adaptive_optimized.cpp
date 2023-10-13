@@ -280,7 +280,7 @@ arma::vec grad_MALA(arma::vec R,
   arma::vec grad_lik_part11 = X1.t() * (Pfn2 % (mainpart11 % v));
   arma::vec grad_lik_part21 = - X1.t() * (Nfn2 % (mainpart21 % v));
   arma::vec grad_lik_part12 = X2.t() * (Pfn1 % (mainpart12 % v));
-  arma::vec grad_lik_part22 = - X1.t() * (Nfn1 % (mainpart22 % v));
+  arma::vec grad_lik_part22 = - X2.t() * (Nfn1 % (mainpart22 % v));
   
   arma::vec grad_lik = (2/sigma_sq)*join_cols(grad_lik_part11,
                         grad_lik_part21,
