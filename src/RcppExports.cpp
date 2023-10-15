@@ -69,8 +69,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // pot_MALA
-double pot_MALA(arma::vec R, arma::mat X1, arma::mat X2, arma::vec param, arma::mat S1, arma::mat S2, double sigma_sq, double delta_sq, Rcpp::List rej_obj);
-RcppExport SEXP _SAID_pot_MALA(SEXP RSEXP, SEXP X1SEXP, SEXP X2SEXP, SEXP paramSEXP, SEXP S1SEXP, SEXP S2SEXP, SEXP sigma_sqSEXP, SEXP delta_sqSEXP, SEXP rej_objSEXP) {
+double pot_MALA(arma::vec R, arma::mat X1, arma::mat X2, arma::vec param, arma::mat S1, arma::mat S2, double sigma_sq, double delta_sq, Rcpp::List rej_obj, double pen_param);
+RcppExport SEXP _SAID_pot_MALA(SEXP RSEXP, SEXP X1SEXP, SEXP X2SEXP, SEXP paramSEXP, SEXP S1SEXP, SEXP S2SEXP, SEXP sigma_sqSEXP, SEXP delta_sqSEXP, SEXP rej_objSEXP, SEXP pen_paramSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -83,13 +83,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type sigma_sq(sigma_sqSEXP);
     Rcpp::traits::input_parameter< double >::type delta_sq(delta_sqSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type rej_obj(rej_objSEXP);
-    rcpp_result_gen = Rcpp::wrap(pot_MALA(R, X1, X2, param, S1, S2, sigma_sq, delta_sq, rej_obj));
+    Rcpp::traits::input_parameter< double >::type pen_param(pen_paramSEXP);
+    rcpp_result_gen = Rcpp::wrap(pot_MALA(R, X1, X2, param, S1, S2, sigma_sq, delta_sq, rej_obj, pen_param));
     return rcpp_result_gen;
 END_RCPP
 }
 // grad_MALA
-arma::vec grad_MALA(arma::vec R, arma::mat X1, arma::mat X2, arma::vec param, arma::mat S1, arma::mat S2, double sigma_sq, double delta_sq, Rcpp::List rej_obj);
-RcppExport SEXP _SAID_grad_MALA(SEXP RSEXP, SEXP X1SEXP, SEXP X2SEXP, SEXP paramSEXP, SEXP S1SEXP, SEXP S2SEXP, SEXP sigma_sqSEXP, SEXP delta_sqSEXP, SEXP rej_objSEXP) {
+arma::vec grad_MALA(arma::vec R, arma::mat X1, arma::mat X2, arma::vec param, arma::mat S1, arma::mat S2, double sigma_sq, double delta_sq, Rcpp::List rej_obj, double pen_param);
+RcppExport SEXP _SAID_grad_MALA(SEXP RSEXP, SEXP X1SEXP, SEXP X2SEXP, SEXP paramSEXP, SEXP S1SEXP, SEXP S2SEXP, SEXP sigma_sqSEXP, SEXP delta_sqSEXP, SEXP rej_objSEXP, SEXP pen_paramSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -102,13 +103,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type sigma_sq(sigma_sqSEXP);
     Rcpp::traits::input_parameter< double >::type delta_sq(delta_sqSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type rej_obj(rej_objSEXP);
-    rcpp_result_gen = Rcpp::wrap(grad_MALA(R, X1, X2, param, S1, S2, sigma_sq, delta_sq, rej_obj));
+    Rcpp::traits::input_parameter< double >::type pen_param(pen_paramSEXP);
+    rcpp_result_gen = Rcpp::wrap(grad_MALA(R, X1, X2, param, S1, S2, sigma_sq, delta_sq, rej_obj, pen_param));
     return rcpp_result_gen;
 END_RCPP
 }
 // sq_sampler
-Rcpp::List sq_sampler(arma::vec R, arma::mat X1, arma::mat X2, arma::mat S1, arma::mat S2, double sigma_sq, double delta_sq, arma::vec old_param, double eps_MALA, arma::mat precond_mat, arma::mat precond_mat_inv, int L_HMC, Rcpp::List rej_obj);
-RcppExport SEXP _SAID_sq_sampler(SEXP RSEXP, SEXP X1SEXP, SEXP X2SEXP, SEXP S1SEXP, SEXP S2SEXP, SEXP sigma_sqSEXP, SEXP delta_sqSEXP, SEXP old_paramSEXP, SEXP eps_MALASEXP, SEXP precond_matSEXP, SEXP precond_mat_invSEXP, SEXP L_HMCSEXP, SEXP rej_objSEXP) {
+Rcpp::List sq_sampler(arma::vec R, arma::mat X1, arma::mat X2, arma::mat S1, arma::mat S2, double sigma_sq, double delta_sq, arma::vec old_param, double eps_MALA, arma::mat precond_mat, arma::mat precond_mat_inv, int L_HMC, Rcpp::List rej_obj, double pen_param);
+RcppExport SEXP _SAID_sq_sampler(SEXP RSEXP, SEXP X1SEXP, SEXP X2SEXP, SEXP S1SEXP, SEXP S2SEXP, SEXP sigma_sqSEXP, SEXP delta_sqSEXP, SEXP old_paramSEXP, SEXP eps_MALASEXP, SEXP precond_matSEXP, SEXP precond_mat_invSEXP, SEXP L_HMCSEXP, SEXP rej_objSEXP, SEXP pen_paramSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -125,13 +127,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::mat >::type precond_mat_inv(precond_mat_invSEXP);
     Rcpp::traits::input_parameter< int >::type L_HMC(L_HMCSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type rej_obj(rej_objSEXP);
-    rcpp_result_gen = Rcpp::wrap(sq_sampler(R, X1, X2, S1, S2, sigma_sq, delta_sq, old_param, eps_MALA, precond_mat, precond_mat_inv, L_HMC, rej_obj));
+    Rcpp::traits::input_parameter< double >::type pen_param(pen_paramSEXP);
+    rcpp_result_gen = Rcpp::wrap(sq_sampler(R, X1, X2, S1, S2, sigma_sq, delta_sq, old_param, eps_MALA, precond_mat, precond_mat_inv, L_HMC, rej_obj, pen_param));
     return rcpp_result_gen;
 END_RCPP
 }
 // SIDsampler_draws_adaptive_optimized
-Rcpp::List SIDsampler_draws_adaptive_optimized(arma::vec y, arma::mat ME_mat, arma::cube IE_list, arma::vec eps_MALA, double c_HMC, int L_HMC, int MC, int n, int p, int p_cov, arma::mat SigmaME, arma::mat SigmaME_inv, arma::mat SigmaInt, arma::mat SigmaInt_inv, int ME_nspl, int IE_nspl, int cutoff, arma::mat map_k_to_uv, arma::vec zero_ind, double accept_low, double accept_high, double accept_scale, double a_lamb, double b_lamb, Rcpp::List init_values, int precond);
-RcppExport SEXP _SAID_SIDsampler_draws_adaptive_optimized(SEXP ySEXP, SEXP ME_matSEXP, SEXP IE_listSEXP, SEXP eps_MALASEXP, SEXP c_HMCSEXP, SEXP L_HMCSEXP, SEXP MCSEXP, SEXP nSEXP, SEXP pSEXP, SEXP p_covSEXP, SEXP SigmaMESEXP, SEXP SigmaME_invSEXP, SEXP SigmaIntSEXP, SEXP SigmaInt_invSEXP, SEXP ME_nsplSEXP, SEXP IE_nsplSEXP, SEXP cutoffSEXP, SEXP map_k_to_uvSEXP, SEXP zero_indSEXP, SEXP accept_lowSEXP, SEXP accept_highSEXP, SEXP accept_scaleSEXP, SEXP a_lambSEXP, SEXP b_lambSEXP, SEXP init_valuesSEXP, SEXP precondSEXP) {
+Rcpp::List SIDsampler_draws_adaptive_optimized(arma::vec y, arma::mat ME_mat, arma::cube IE_list, arma::vec eps_MALA, double c_HMC, int L_HMC, int MC, int n, int p, int p_cov, arma::mat SigmaME, arma::mat SigmaME_inv, arma::mat SigmaInt, arma::mat SigmaInt_inv, int ME_nspl, int IE_nspl, int cutoff, arma::mat map_k_to_uv, arma::vec zero_ind, double accept_low, double accept_high, double accept_scale, double a_lamb, double b_lamb, Rcpp::List init_values, int precond, double pen_param);
+RcppExport SEXP _SAID_SIDsampler_draws_adaptive_optimized(SEXP ySEXP, SEXP ME_matSEXP, SEXP IE_listSEXP, SEXP eps_MALASEXP, SEXP c_HMCSEXP, SEXP L_HMCSEXP, SEXP MCSEXP, SEXP nSEXP, SEXP pSEXP, SEXP p_covSEXP, SEXP SigmaMESEXP, SEXP SigmaME_invSEXP, SEXP SigmaIntSEXP, SEXP SigmaInt_invSEXP, SEXP ME_nsplSEXP, SEXP IE_nsplSEXP, SEXP cutoffSEXP, SEXP map_k_to_uvSEXP, SEXP zero_indSEXP, SEXP accept_lowSEXP, SEXP accept_highSEXP, SEXP accept_scaleSEXP, SEXP a_lambSEXP, SEXP b_lambSEXP, SEXP init_valuesSEXP, SEXP precondSEXP, SEXP pen_paramSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -161,7 +164,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type b_lamb(b_lambSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type init_values(init_valuesSEXP);
     Rcpp::traits::input_parameter< int >::type precond(precondSEXP);
-    rcpp_result_gen = Rcpp::wrap(SIDsampler_draws_adaptive_optimized(y, ME_mat, IE_list, eps_MALA, c_HMC, L_HMC, MC, n, p, p_cov, SigmaME, SigmaME_inv, SigmaInt, SigmaInt_inv, ME_nspl, IE_nspl, cutoff, map_k_to_uv, zero_ind, accept_low, accept_high, accept_scale, a_lamb, b_lamb, init_values, precond));
+    Rcpp::traits::input_parameter< double >::type pen_param(pen_paramSEXP);
+    rcpp_result_gen = Rcpp::wrap(SIDsampler_draws_adaptive_optimized(y, ME_mat, IE_list, eps_MALA, c_HMC, L_HMC, MC, n, p, p_cov, SigmaME, SigmaME_inv, SigmaInt, SigmaInt_inv, ME_nspl, IE_nspl, cutoff, map_k_to_uv, zero_ind, accept_low, accept_high, accept_scale, a_lamb, b_lamb, init_values, precond, pen_param));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -171,10 +175,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SAID_rejection_sampler", (DL_FUNC) &_SAID_rejection_sampler, 10},
     {"_SAID_sigmasq_sampler", (DL_FUNC) &_SAID_sigmasq_sampler, 2},
     {"_SAID_maineffects_sampler", (DL_FUNC) &_SAID_maineffects_sampler, 4},
-    {"_SAID_pot_MALA", (DL_FUNC) &_SAID_pot_MALA, 9},
-    {"_SAID_grad_MALA", (DL_FUNC) &_SAID_grad_MALA, 9},
-    {"_SAID_sq_sampler", (DL_FUNC) &_SAID_sq_sampler, 13},
-    {"_SAID_SIDsampler_draws_adaptive_optimized", (DL_FUNC) &_SAID_SIDsampler_draws_adaptive_optimized, 26},
+    {"_SAID_pot_MALA", (DL_FUNC) &_SAID_pot_MALA, 10},
+    {"_SAID_grad_MALA", (DL_FUNC) &_SAID_grad_MALA, 10},
+    {"_SAID_sq_sampler", (DL_FUNC) &_SAID_sq_sampler, 14},
+    {"_SAID_SIDsampler_draws_adaptive_optimized", (DL_FUNC) &_SAID_SIDsampler_draws_adaptive_optimized, 27},
     {NULL, NULL, 0}
 };
 
