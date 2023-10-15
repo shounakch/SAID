@@ -214,7 +214,7 @@ double pot_MALA(arma::vec R,
     ((2 * M * logtau1) - (logtau1 - log(1 + tau1sq))) +         //PE from p(tau1^2) and (tau1^2)^(-M)
     ((2 * M * logtau2) - (logtau2 - log(1 + tau2sq))) +         //PE from p(tau2^2) and (tau2^2)^(-M)
     (pen_param * penalty_term) +                                //PE from penalty
-    (0.5 * pow(kappa, 2.0)) +                                   //PE from prior on penalty; log(penalty) ~ N(0,1)
+    (pow(kappa - log(1000), 2.0) / (2 * 0.01)) +                       //PE from prior on penalty; log(penalty) ~ N(log(1000),0.01)
     (pot_rej) +                                                 //PE from rejected samples for kappa
     ((2 * M * rej_len * logtau1)) +                             //PE from (tau1^2)^(-M * rej_len), rejected samples
     ((2 * M * rej_len * logtau2)) +                             //PE from (tau2^2)^(-M * rej_len), rejected samples
@@ -321,9 +321,9 @@ arma::vec grad_MALA(arma::vec R,
     
   }
   
-  double grad_pen = (pen_param * penalty_term) +            //Penalty
-    (log(pen_param)) +                      //Prior on penalty  
-    (pot_grad_rej); //Rejection sampling
+  double grad_pen = (pen_param * penalty_term) +                 //Penalty
+    ((log(pen_param) - log(1000)) / 0.01) +                      //Prior on penalty  
+    (pot_grad_rej);                                              //Rejection sampling
   
   arma::vec grad_pen_vec(1, fill::zeros);
   grad_pen_vec(0) = grad_pen;
