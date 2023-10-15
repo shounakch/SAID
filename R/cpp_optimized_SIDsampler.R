@@ -600,7 +600,8 @@ SAIDsampler<-function(y,
                                                   a_lamb,
                                                   b_lamb,
                                                   init_values,
-                                                  precond)
+                                                  precond,
+                                                  pen_param)
   
   print(noquote(paste("########## Sampling completed with MC = ", MC, " ########## ", sep = "")))
   
