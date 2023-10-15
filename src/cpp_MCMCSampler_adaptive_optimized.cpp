@@ -209,17 +209,17 @@ double pot_MALA(arma::vec R,
   double QF24 = rej_obj["QF24"];
   double rej_len = rej_obj["rej_len"];
   
-  double pot_prior = ((c_11+c_12) / (tau1sq * delta_sq)) +    //PE from p(theta1, phi1)
-    ((c_21+c_22) / (tau2sq * delta_sq)) +                     //PE from p(theta2, phi2)
-    ((2 * M * logtau1) - (logtau1 - log(1 + tau1sq))) +       //PE from p(tau1^2)
-    ((2 * M * logtau2) - (logtau2 - log(1 + tau2sq))) +       //PE from p(tau2^2)
-    (pen_param * penalty_term) +                              //PE from penalty
-    (0.5 * pow(kappa, 2.0)) +                                 //PE from prior on penalty; log(penalty) ~ N(0,1)
-    (pot_rej) +                                               //PE from rejected samples for kappa
-    ((2 * M * rej_len * logtau1) - (logtau1 - log(1 + tau1sq))) +       //PE from p(tau1^2), rejected samples
-    ((2 * M * rej_len * logtau2) - (logtau2 - log(1 + tau2sq))) +       //PE from p(tau2^2), rejected samples
-    (0.5*QF13 / (tau1sq * delta_sq)) +                                     //PE from p(rej_1, rej_3), rejected samples
-    (0.5*QF24 / (tau2sq * delta_sq));                                    //PE from p(rej_2, rej_4), rejected samples
+  double pot_prior = ((c_11+c_12) / (tau1sq * delta_sq)) +      //PE from p(theta1, phi1)
+    ((c_21+c_22) / (tau2sq * delta_sq)) +                       //PE from p(theta2, phi2)
+    ((2 * M * logtau1) - (logtau1 - log(1 + tau1sq))) +         //PE from p(tau1^2) and (tau1^2)^(-M)
+    ((2 * M * logtau2) - (logtau2 - log(1 + tau2sq))) +         //PE from p(tau2^2) and (tau2^2)^(-M)
+    (pen_param * penalty_term) +                                //PE from penalty
+    (0.5 * pow(kappa, 2.0)) +                                   //PE from prior on penalty; log(penalty) ~ N(0,1)
+    (pot_rej) +                                                 //PE from rejected samples for kappa
+    ((2 * M * rej_len * logtau1)) +                             //PE from (tau1^2)^(-M * rej_len), rejected samples
+    ((2 * M * rej_len * logtau2)) +                             //PE from (tau2^2)^(-M * rej_len), rejected samples
+    (0.5*QF13 / (tau1sq * delta_sq)) +                          //PE from p(rej_1, rej_3), rejected samples
+    (0.5*QF24 / (tau2sq * delta_sq));                           //PE from p(rej_2, rej_4), rejected samples
       
   double pot_total = pot_lik + pot_prior;
   
@@ -330,13 +330,13 @@ arma::vec grad_MALA(arma::vec R,
   
   ///// Construct grad_tau1 and grad_tau2
   
-  arma::mat c_11mat = (theta1.t() * (S1 * theta1));
+  arma::mat c_11mat = 0.5 * (theta1.t() * (S1 * theta1));
   double c_11 = c_11mat(0,0);
-  arma::mat c_21mat = (theta2.t() * (S1 * theta2));
+  arma::mat c_21mat = 0.5 * (theta2.t() * (S1 * theta2));
   double c_21 = c_21mat(0,0);
-  arma::mat c_12mat = (phi1.t() * (S2 * phi1));
+  arma::mat c_12mat = 0.5 * (phi1.t() * (S2 * phi1));
   double c_12 = c_12mat(0,0);
-  arma::mat c_22mat = (phi2.t() * (S2 * phi2));
+  arma::mat c_22mat = 0.5 * (phi2.t() * (S2 * phi2));
   double c_22 = c_22mat(0,0);
   
   double QF13 = rej_obj["QF13"];
@@ -344,13 +344,13 @@ arma::vec grad_MALA(arma::vec R,
   int rej_len = rej_obj["rej_len"];
   
   double grad_tau1 = (2 * M * (1 + rej_len)) - 
-    ((c_11 + c_12 + QF13) / (tau1sq * delta_sq)) - ((1 - tau1sq) / (1 + tau1sq));
+    (((2 * (c_11 + c_12)) + QF13) / (tau1sq * delta_sq)) - ((1 - tau1sq) / (1 + tau1sq));
   
   arma::vec grad_tau1_vec(1, fill::zeros);
   grad_tau1_vec(0) = grad_tau1;
   
-  double grad_tau2 = (2 * M * (1 + rej_len)) 
-    - ((c_21 + c_22 + QF24) / (tau2sq * delta_sq)) - ((1 - tau2sq) / (1 + tau2sq));
+  double grad_tau2 = (2 * M * (1 + rej_len)) - 
+    (((2 * (c_21 + c_22)) + QF24) / (tau2sq * delta_sq)) - ((1 - tau2sq) / (1 + tau2sq));
   
   arma::vec grad_tau2_vec(1, fill::zeros);
   grad_tau2_vec(0) = grad_tau2;
