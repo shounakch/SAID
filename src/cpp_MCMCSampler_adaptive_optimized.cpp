@@ -545,7 +545,7 @@ Rcpp::List SIDsampler_draws_adaptive_optimized(arma::vec y,
   
   // Define preconditioning matrix storage
   
-  int n_HMC_param = 4*IE_nspl + 3;
+  int n_HMC_param = 4*IE_nspl + 2;
   
   arma::cube precond_mat_stor(n_HMC_param, n_HMC_param, K, fill::zeros);
   arma::cube precond_mat_inv_stor(n_HMC_param, n_HMC_param, K, fill::zeros);
