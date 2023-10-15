@@ -417,7 +417,8 @@ SAIDsampler<-function(y,
                      accept_low = 0.50,
                      accept_high = 0.60,
                      accept_scale = 0.8,
-                     precond = 0){
+                     precond = 0,
+                     pen_param = 10){
   
   library(MASS)
   library(splines)
