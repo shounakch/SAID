@@ -9,3 +9,5 @@ Description: Implements the Synergistic Antagonistic Interaction Detection frame
 License: What license is it under?
 Imports: Rcpp (>= 1.0.7), MASS, splines, splines2, mvtnorm
 LinkingTo: Rcpp, RcppArmadillo
+NeedsCompilation: yes
+Packaged: 2023-12-14 19:15:15 UTC; root
