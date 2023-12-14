@@ -47,7 +47,14 @@ SAIDsampler(y,
   
 
 \details{
-  A list is returned with the following components.
+  A list is returned with the following components:
+  1. SIM_model = List with values described below.
+  2. ME_list
+  3. ME_knots
+  4. IE_knots
+  5. data
+  6. init_values
+  7. zero_ind
 }
 
 \value{
